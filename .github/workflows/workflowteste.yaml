@@ -1,0 +1,21 @@
+name: Continuos Integration
+
+on: push
+
+jobs:
+  teste-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Instalando o Node
+        user: actions/setup-node@v2
+        with:
+          node-version: 22.
+
+      -name: npm i e build
+      run: |
+        npm i
+        npm run build
+  
