@@ -2,16 +2,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, LogInIcon } from "lucide-react";
+import { Eye, EyeOff, LoaderCircleIcon, LogInIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
+import { useRouter, redirect } from "next/navigation";
 
 const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  async function onSubmit(event: SyntheticEvent) {
+    event.preventDefault()
+    setIsLoading(true)
+
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push('/');
+    }, 1000)
+  }
+
 
   return (
-    <div className="grid grid-cols-2 h-full">
+    <div className="grid grid-cols-1 h-full sm:grid-cols-1 md:grid-cols-2" >
       <div className="relative h-full w-full bg-gradient-to-r from-orange-400 to-orange-600">
         <div className="flex flex-col h-full justify-center items-center">
           <Image src="/images/logo.png" alt="Área restrita" width={400} height={225} />
@@ -56,8 +70,8 @@ const Page = () => {
             </Link>
           </div>
 
-          <Button className="w-full mt-8 h-12 font-bold">
-            <LogInIcon className="mr-2" />
+          <Button className="w-full mt-8 h-12 font-bold" disabled={isLoading} onClick={onSubmit}>
+            {isLoading ? <LoaderCircleIcon className="mr-2 animate-spin" />: <LogInIcon className="mr-2" />}            
             Acessar
           </Button>
         </div>
