@@ -1,26 +1,77 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useRouter, redirect } from "next/navigation";
 import { SyntheticEvent } from "react";
 
-export default function Home() {
-  const router = useRouter();
-  async function onSubmit(event: SyntheticEvent) {
-    event.preventDefault()
-    router.push('/login');
-  }
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 bg-gradient-to-r from-orange-400 to-orange-600">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image src="/images/logo.png" alt="Área restrita" width={400} height={225} />
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import { Search } from "lucide-react";
 
-        <div className="flex w-full">
-        <Button className="w-full mt-8 h-12 font-bold bg-white text-orange-500" variant="secondary" onClick={onSubmit}>           
-            Ir para página de login
-          </Button>
+export default function Home() {  
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <div className="relative">
+              <div className="absolute pointer-events-none select-none left-3 top-2 text-gray-400">
+                  <Search className="w-5 h-8"/>
+              </div>
+              <Input
+                className="mb-2 placeholder:font-bold placeholder:left-5 placeholder:text-gray-400 w-auto pl-9"
+                id="search"
+                placeholder="Pesquisar"
+                type="text"
+                autoCapitalize="none"
+                autoComplete="none"
+                autoCorrect="off"
+              />
+              
+            </div>
+
+            
+          </div>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div className="aspect-video rounded-xl bg-gray-100" />
+            <div className="aspect-video rounded-xl bg-gray-100" />
+            <div className="aspect-video rounded-xl bg-gray-100" />
+          </div>
+          <div className="min-h-[100vh] flex-1 rounded-xl bg-gray-100 md:min-h-min" />
         </div>
-      </main>
-    </div>    
+      </SidebarInset>
+    </SidebarProvider>     
   );
 }

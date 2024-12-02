@@ -70,9 +70,13 @@ const Page = () => {
             </Link>
           </div>
 
-          <Button className="w-full mt-8 h-12 font-bold" disabled={isLoading} onClick={onSubmit}>
+          <Button className="w-full mt-8 font-bold" disabled={isLoading} onClick={onSubmit}>
             {isLoading ? <LoaderCircleIcon className="mr-2 animate-spin" />: <LogInIcon className="mr-2" />}            
             Acessar
+          </Button>
+
+          <Button className="w-full mt-8 font-bold outline-orange-500" disabled={isLoading} variant="outline">
+            É minha primeira vez aqui
           </Button>
         </div>
       </div>
